@@ -1,0 +1,57 @@
+<ion-view view-title={{exploreNearby}}>
+	<div class="tabs-striped tabs-top tabs-background-assertive tabs-color-light" ng-show="exploreNearby != 'Welcome'">
+		<div class="tabs">
+		  <a class="tab-item" ng-class="{active: exploreQuery == 'Food'}" href="#" ng-click="tabClick('Food')">
+			<i class="icon ion-android-restaurant"></i>
+			Restaurant
+		  </a>
+		  <a class="tab-item" ng-class="{active: exploreQuery == 'Coffee'}" href="#" ng-click="tabClick('Coffee')">
+			<i class="icon ion-coffee"></i>
+			Coffee
+		  </a>
+		  <a class="tab-item" ng-class="{active: exploreQuery == 'Movie Theater'}" href="#" ng-click="tabClick('Movie Theater')">
+			<i class="icon ion-ios-film"></i>
+			Movie Theater
+		  </a>
+		  <a class="tab-item" ng-class="{active: exploreQuery == 'Hospital'}" href="#" ng-click="tabClick('Hospital')">
+			<i class="icon ion-ios-medkit"></i>
+			Hospital
+		  </a>
+		  <a class="tab-item" ng-class="{active: exploreQuery == 'Shopping'}" href="#" ng-click="tabClick('Shopping')">
+			<i class="icon ion-ios-cart"></i>
+			Shopping
+		  </a>
+		</div>
+	</div>
+	
+	<ion-content ng-show="exploreNearby == 'Welcome'">
+		<img class="full-image" src="./img/e5e60f06ec6e567003dee7adb543c5a6.jpg"></img>
+	</ion-content>
+
+	<ion-content class="has-subheader" ng-show="exploreNearby != 'Welcome'">
+		<div class="list">
+			<a ng-repeat="item in places" class="item item-text-wrap item-thumbnail-left" >
+			
+			  <img ng-src="{{buildVenueThumbnail(item.venue.featuredPhotos)}}">
+			  <h2 ng-click="fn_ShowMap({{item.venue.location.lat}},{{item.venue.location.lng}})"><b>{{item.venue.name}}</b> <i class="ion-android-locate" ng-click="fn_ShowMap({{item.venue.location.lat}},{{item.venue.location.lng}})"></i></h2>
+			  <p>{{item.venue.location.formattedAddress[0]}}</p>
+			  
+			  <p ng-show="{{item.venue.contact.phone}}" ng-click="fn_Dial({{item.venue.contact.phone}})">
+				<i class="icon ion-ios-telephone"></i>
+				&nbsp{{item.venue.contact.phone}}
+			  </p>
+			  
+			  <p ng-show="{{item.venue.rating}}">
+				{{item.venue.ratingSignals}} votes &nbsp
+				<span class="Rounded">{{item.venue.rating}}<sup>/10</sup></span>
+			  </p>
+
+			</a>
+		</div>
+		<ion-infinite-scroll on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
+	
+	</ion-content>
+	
+	<div class="bar bar-footer" ng-show="exploreNearby != 'Welcome'">
+	</div>
+</ion-view>
